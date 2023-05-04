@@ -64,7 +64,7 @@ def chestHunt(saviorX,saviorY,window):
             x-=95*10    
             v+=1
             h=0
-    time.sleep(10)
+    #time.sleep(10)
     close= pyautogui.locateCenterOnScreen("assets/close.png",grayscale=True,confidence= 0.8)
     win32api.SetCursorPos((close.x,close.y))
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
@@ -108,19 +108,19 @@ def jumpShoot(x,y):
     time.sleep(0.2)
     win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
     i=0
-    while(i<=8):
+    while(i<=20):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-        time.sleep(0.05)
+        time.sleep(0.005)
         i +=1
 
 def shoot(x,y):
     win32api.SetCursorPos((x,y))
     i=0
-    while(i<4):
+    while(i<10):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-        time.sleep(0.2)
+        time.sleep(0.002)
         i +=1
 def bonus(rootX,rootY):
     tmpX = rootX + 820

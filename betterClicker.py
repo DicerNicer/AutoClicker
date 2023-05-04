@@ -55,8 +55,6 @@ def toggle_event(key):
         else:
             clicking = not clicking
             var1.set(True)
-
-
     
 
 def main():
@@ -70,27 +68,29 @@ def main():
                 f.chestHunt(saviorX,saviorY,idleWindow)
                 
             # Detecting Box
-            elif det.box(idleWindow):
+            if det.box(idleWindow):
                 var2.set(True)
                 print("Box")
                 f.highJump(700,400)
             # Detecting Bonus Lvl
             elif det.bonusR(idleWindow):
-                var4.set(True)
-                print("Bonus")
-                f.bonusDrag(idleWindow,"r")
+               var4.set(True)
+               print("Bonus")
+               f.bonusDrag(idleWindow,"r")
             elif det.bonusL(idleWindow):
-                var4.set(True)
-                print("Bonus")
-                f.bonusDrag(idleWindow,"l")
+               var4.set(True)
+               print("Bonus")
+               f.bonusDrag(idleWindow,"l")
             elif det.bonusClose(idleWindow):
-                bonusClose = pyautogui.locateCenterOnScreen("assets/bonusClose.png",region=(rootX + 660, rootY+550,150,68),grayscale=True, confidence=0.8 )
-                win32api.SetCursorPos((bonusClose.x,bonusClose.y))
-                win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
-                win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)            
-            # Spam Click
+               bonusClose = pyautogui.locateCenterOnScreen("assets/bonusClose.png",region=(rootX + 660, rootY+550,150,68),grayscale=True, confidence=0.8 )
+               win32api.SetCursorPos((bonusClose.x,bonusClose.y))
+               win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
+               win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)            
+            ## Spam Click
             else:
-                f.jumpShoot(700,400)
+                #f.jumpShoot(700,400)
+                f.shoot(700,400)
+
                 f.boost(700,400)
                 var2.set(False)
                 var3.set(False)
