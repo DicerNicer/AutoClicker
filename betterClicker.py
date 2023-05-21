@@ -94,7 +94,7 @@ def main():
                 f.boost(700,400)
                 var2.set(False)
                 var3.set(False)
-                var4.set(False)               
+                var4.set(False)                       
         time.sleep(0.001)
 
 gui_thread = threading.Thread(target=gui)

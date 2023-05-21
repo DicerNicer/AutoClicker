@@ -117,10 +117,10 @@ def jumpShoot(x,y):
 def shoot(x,y):
     win32api.SetCursorPos((x,y))
     i=0
-    while(i<10):
+    while(i<6):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-        time.sleep(0.002)
+        time.sleep(0.05)
         i +=1
 def bonus(rootX,rootY):
     tmpX = rootX + 820
