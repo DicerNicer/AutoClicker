@@ -89,8 +89,9 @@ def main():
             ## Spam Click
             else:
                 #f.jumpShoot(700,400)
+                f.click(1200,120)
                 f.shoot(700,400)
-
+                
                 f.boost(700,400)
                 var2.set(False)
                 var3.set(False)
