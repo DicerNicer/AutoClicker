@@ -8,7 +8,6 @@ from pynput.keyboard import Listener, KeyCode
 import detection as det
 import tkinter as tk
 
-
 idleWindow = pyautogui.getWindowsWithTitle("Idle Slayer")[0]
 rootX = idleWindow.left
 rootY = idleWindow.top
@@ -16,33 +15,64 @@ rootY = idleWindow.top
 clicking = False
 TOGGLE_BUTTON = KeyCode(char="t")
 
-#Test Kommentar
+
 
 
 def gui():
     # Erstellen des Hauptfensters
     root = tk.Tk()
     root.title("Idle Slayer Auto Clicker")
-    root.geometry("300x200+100+1000")
+    root.geometry("300x200+100+2000")
 
     # Erstellen der Kontrollleuchten
-    global var1
-    global var2
-    global var3
-    global var4
-    var1 = tk.BooleanVar()
-    var2 = tk.BooleanVar()
-    var3 = tk.BooleanVar()
-    var4 = tk.BooleanVar()
+    global autoClickerToggle
+    global boxToggle
+    global chestHuntToggle
+    global bonusLvlToggle
+    global rageToggle
+    global closeToggle
+    global boxDetectet
+    global chestHuntDetectet
+    global bonusLvlLDetectet
+    global bonusLvlRDetectet
+    global rageDetectet
+    global closeDetectet
 
-    checkbox1 = tk.Checkbutton(root, text="Auto Clicker an", variable=var1)
+    autoClickerToggle = tk.BooleanVar()
+    boxToggle = tk.BooleanVar()
+    chestHuntToggle = tk.BooleanVar()
+    bonusLvlToggle = tk.BooleanVar()
+    rageToggle = tk.BooleanVar()
+    closeToggle = tk.BooleanVar()
+    boxDetectet = tk.BooleanVar()
+    chestHuntDetectet = tk.BooleanVar()
+    bonusLvlLDetectet = tk.BooleanVar()
+    bonusLvlRDetectet = tk.BooleanVar()
+    rageDetectet = tk.BooleanVar()
+    closeDetectet = tk.BooleanVar()
+
+    checkbox1 = tk.Checkbutton(root, text="Auto Clicker an(t)", variable=autoClickerToggle)
     checkbox1.pack()
-    checkbox2 = tk.Checkbutton(root, text="Box", variable=var2)
+    checkbox2 = tk.Checkbutton(root, text="Box", variable=boxToggle)
     checkbox2.pack()
-    checkbox3 = tk.Checkbutton(root, text="Chest Hunt", variable=var3)
+    checkbox2D = tk.Checkbutton(root, text="Box Detectet",variable=boxDetectet)
+    checkbox2D.pack()
+    checkbox3 = tk.Checkbutton(root, text="Chest Hunt", variable=chestHuntToggle)
     checkbox3.pack()
-    checkbox4 = tk.Checkbutton(root, text="Bonus Level", variable=var4)
+    checkbox3D = tk.Checkbutton(root,text="Chest Hunt Detectet",variable=chestHuntDetectet)
+    checkbox3D.pack()
+    checkbox4 = tk.Checkbutton(root, text="Bonus Level", variable=bonusLvlToggle)
     checkbox4.pack()
+    checkbox4DL = tk.Checkbutton(root,text="Bonus L Detectet",variable=bonusLvlLDetectet)
+    checkbox4DL.pack()
+    checkbox4DR = tk.Checkbutton(root,text="Bonus R Detectet",variable=bonusLvlRDetectet)
+    checkbox4DR.pack()
+    checkbox5 = tk.Checkbutton(root, text="Rage Mode", variable=rageToggle)
+    checkbox5.pack()
+    checkbox5D = tk.Checkbutton(root,text="Rage Mode Detectet",variable=rageDetectet)
+    checkbox5D.pack()
+    checkbox6 = tk.Checkbutton(root, text="Close Detection",variable=closeToggle)
+    checkbox6
     root.mainloop()
 
 
@@ -51,36 +81,62 @@ def toggle_event(key):
         global clicking
         if clicking:
             clicking = not clicking
-            var1.set(False)
+            autoClickerToggle.set(False)
         else:
             clicking = not clicking
-            var1.set(True)
+            autoClickerToggle.set(True)
     
+def detectionT():
+    while True:
+        if autoClickerToggle.get():
+            if boxToggle:
+                if det.box(idleWindow):
+                    boxDetectet.set(True)
+                else:
+                    boxDetectet.set(False)
+            if chestHuntToggle.get():
+                if det.chestHunt(idleWindow):
+                    chestHuntDetectet.set(True)
+                else:
+                    chestHuntDetectet.set(False)
+            if bonusLvlToggle.get():
+                if det.bonusL(idleWindow):
+                    bonusLvlLDetectet.set(True)
+                else:
+                    bonusLvlLDetectet.set(False)
+                if det.bonusR(idleWindow):
+                    bonusLvlRDetectet.set(True)
+                else:
+                    bonusLvlRDetectet.set(False)
+            if rageToggle.get():
+                if det.rage(idleWindow):
+                    rageDetectet.set(True)
+                else:
+                    rageDetectet.set(False)
+            if closeToggle.get():
+                if det.bonusClose():
+                    closeDetectet.set(True)
+                else:
+                    closeDetectet.set(False)
+
 
 def main():
     while True:
         # ON/OFF Condition Key "t"
         if clicking:
             # Detecting Chest Hunt
-            if det.chestHunt(idleWindow):
-                var3.set(True)
+            if chestHuntDetectet.get():
                 saviorX , saviorY = det.savior(idleWindow)
                 f.chestHunt(saviorX,saviorY,idleWindow)
                 
             # Detecting Box
-            if det.box(idleWindow):
-                var2.set(True)
-                print("Box")
+            if boxDetectet.get():
                 f.highJump(700,400)
             # Detecting Bonus Lvl
-            elif det.bonusR(idleWindow):
-               var4.set(True)
-               print("Bonus")
-               f.bonusDrag(idleWindow,"r")
-            elif det.bonusL(idleWindow):
-               var4.set(True)
-               print("Bonus")
+            elif bonusLvlLDetectet.get():
                f.bonusDrag(idleWindow,"l")
+            elif bonusLvlRDetectet.get():
+               f.bonusDrag(idleWindow,"r")
             elif det.bonusClose(idleWindow):
                bonusClose = pyautogui.locateCenterOnScreen("assets/bonusClose.png",region=(rootX + 660, rootY+550,150,68),grayscale=True, confidence=0.8 )
                win32api.SetCursorPos((bonusClose.x,bonusClose.y))
@@ -92,18 +148,19 @@ def main():
                 f.shoot(700,400)
 
                 f.boost(700,400)
-                var2.set(False)
-                var3.set(False)
-                var4.set(False)                       
+                       
         time.sleep(0.001)
 
 gui_thread = threading.Thread(target=gui)
 gui_thread.start()
 
+
+
 main_thread = threading.Thread(target=main)
 main_thread.start()
 
-
+detetction_thread = threading.Thread(target=detectionT)
+detetction_thread.start()
 
 with Listener(on_press=toggle_event) as listener:
     listener.join()

@@ -9,7 +9,13 @@ import threading
 from pynput.mouse import Controller, Button
 from pynput.keyboard import Listener, KeyCode
 
-
+def rage(window):
+    trigger=False
+    title = window.title
+    rage = pyautogui.locateOnWindow("assets/rage.png",title,grayscale=True)
+    if rage:
+        trigger = True
+    return trigger,rage.x,rage.y
 
 def chestHunt(window):
     rootX = window.left
